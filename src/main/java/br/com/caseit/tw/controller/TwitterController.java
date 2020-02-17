@@ -1,25 +1,24 @@
-package br.com.itau.twitter.controller;
+package br.com.caseit.tw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import br.com.itau.twitter.model.UserTwitter;
-import br.com.itau.twitter.service.TwitterService;
+import br.com.caseit.tw.model.UserTw;
+import br.com.caseit.tw.service.TwService;
 
 @RestController
 public class TwitterController {
-	private final TwitterService twitterService;
+	private final TwService twitterService;
 	
 	@Autowired
-	public TwitterController(TwitterService twitterService) {
+	public TwitterController(TwService twitterService) {
 		this.twitterService = twitterService;
 	}
 	
 	
 	@RequestMapping("/most-follow-twitter")
 	public String getMostFollowsTwitter() {
-		UserTwitter[] resp = twitterService.getUserMostFollowers();
+		UserTw[] resp = twitterService.getUserMostFollowers();
 		
 		StringBuilder retData = new StringBuilder("<html>" +
 			       "<body>" +

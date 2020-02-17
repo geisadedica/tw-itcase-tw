@@ -8,11 +8,11 @@
 		<version>2.2.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.itau.twitter</groupId>
-	<artifactId>itau-twitter</artifactId>
+	<groupId>br.com.caseit.tw</groupId>
+	<artifactId>caseit-tw</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>itau-twitter</name>
-	<description>Itau Twitter</description>
+	<name>caseit-tw</name>
+	<description>Case Teste dados e leitura</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -53,6 +53,12 @@
 			<version>1.2.3</version>
 		</dependency>
 		
+		<!-->dependency>
+    		<groupId>org.springframework.data</groupId>
+    		<artifactId>spring-data-mongodb</artifactId>
+    		<version>2.2.4.RELEASE</version>
+  		</dependency-->
+  
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

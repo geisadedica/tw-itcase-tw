@@ -1,4 +1,4 @@
-package br.com.itau.twitter.util;
+package br.com.caseit.tw.util;
 
 public class Constants {
 

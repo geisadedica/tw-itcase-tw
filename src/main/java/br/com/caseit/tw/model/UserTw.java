@@ -1,13 +1,13 @@
-package br.com.itau.twitter.model;
+package br.com.caseit.tw.model;
 
 import lombok.Data;
 
 @Data
-public class UserTwitter {
+public class UserTw {
 	private String name;
 	private Integer countFollow;
 	
-	public UserTwitter(String name, Integer countFollow) {
+	public UserTw(String name, Integer countFollow) {
 		super();
 		this.name = name;
 		this.countFollow = countFollow;

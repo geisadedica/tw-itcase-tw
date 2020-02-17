@@ -1,9 +1,10 @@
-package br.com.itau.twitter.client;
+package br.com.caseit.tw.client;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
-import static br.com.itau.twitter.util.Constants.*;
+
+import static br.com.caseit.tw.util.Constants.*;
 
 import org.springframework.stereotype.Component;
 

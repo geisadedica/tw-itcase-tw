@@ -1,11 +1,14 @@
-package br.com.itau.twitter.service;
+package br.com.caseit.tw.service;
 
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.data.mongodb.core.MongoOperations;
+//import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
-import br.com.itau.twitter.client.TwitterClient;
-import br.com.itau.twitter.model.UserTwitter;
+import br.com.caseit.tw.client.TwitterClient;
+import br.com.caseit.tw.data.MongoDBClient;
+import br.com.caseit.tw.model.UserTw;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import twitter4j.Query;
@@ -17,7 +20,7 @@ import twitter4j.User;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class TwitterService {
+public class TwService {
 	
 	private static List<String> tagList = Arrays.asList(
 			"#cloud", "#container", "#devops", "#aws", "#microservices",
@@ -25,14 +28,15 @@ public class TwitterService {
 			"#istio", "#sre");
 		
 	private static Integer MAX_USER = 5;
-	private static UserTwitter userTwitter[] = new UserTwitter[MAX_USER];
-	
-	
+	private static UserTw usersTwitter[] = new UserTw[MAX_USER];
 	
 	@Autowired
 	TwitterClient tCliente;
 	
-	public UserTwitter[] getUserMostFollowers() {
+	//@Autowired
+	//MongoDBClient mongoDb;
+	
+	public UserTw[] getUserMostFollowers() {
 		
 		try {
 			Twitter twitter = tCliente.getInstanceTwitter();
@@ -48,7 +52,7 @@ public class TwitterService {
 						Boolean hasList = false;
 						
 						for(int i = 0; i < MAX_USER; i++) {
-							if(userTwitter[i] != null && userTwitter[i].getName().equals(user.getName())) {
+							if(usersTwitter[i] != null && usersTwitter[i].getName().equals(user.getName())) {
 								hasList = true;
 								break;
 							}
@@ -56,8 +60,8 @@ public class TwitterService {
 						
 						if(!hasList) {
 							for(int i = 0; i < MAX_USER; i++) {
-								if(userTwitter[i] == null || userTwitter[i].getCountFollow() < user.getFollowersCount()) {
-									userTwitter[i] = new UserTwitter(user.getName(), user.getFollowersCount());
+								if(usersTwitter[i] == null || usersTwitter[i].getCountFollow() < user.getFollowersCount()) {
+									usersTwitter[i] = new UserTw(user.getName(), user.getFollowersCount());
 									break;
 								}
 							}													
@@ -67,18 +71,24 @@ public class TwitterService {
 		    }
 
 		    for(int i = 0; i < MAX_USER; i++) {
-		    	log.info("User: " + userTwitter[i].getName() + " Count: " + userTwitter[i].getCountFollow());
+		    	log.info("User: " + usersTwitter[i].getName() + " Count: " + usersTwitter[i].getCountFollow());
 		    }
 			
-		    return userTwitter;
+		    return usersTwitter;
 		    
 		}catch(Exception e) {
 			log.error("Erro: ", e.getMessage());
 		}
 		 return null;
 	}
+	
+	//public void saveList() {
+	//	MongoOperations mongoOps = new MongoTemplate(mongoDb.getInstanceMongo(), "database");
+	//    mongoOps.insert(usersTwitter);
+	    
+	//}
 
-	public TwitterService() {
+	public TwService() {
 		super();
 	}
 }
