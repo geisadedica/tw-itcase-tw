@@ -1,20 +1,30 @@
-@Library('cvc-jenkins-lib')
-import br.com.cvccorp.jenkins.Commons
-final commons = new Commons()
+pipeline {
+   agent any
 
-final _projectName = "caseit-tw"
-final _namespace = "caseit-tw"
-final _gitUrl = "https://github.com/geisadedica/tw-itcase-tw.git"
+   tools {
+      // Install the Maven version configured as "M3" and add it to the path.
+      maven "M3"
+   }
 
-
-node {
-  env.BU="tw"
-  deployTI(_projectName, _namespace, _gitUrl, _appUrlTi) {
-      stage('Pulling do codigo') {
-          commons.cloneOrCheckoutTagFromGit(_gitUrl)
-      }
+   stages {
       stage('Build') {
-          commons.runMavenGoalsWithJava8('-P nexus clean package -Dmaven.test.skip=true')
+         steps {
+            // Get some code from a GitHub repository
+            git 'https://github.com/geisadedica/tw-itcase-tw.git'
+
+            // Run Maven on a Unix agent.
+            sh "mvn -Dmaven.test.failure.ignore=true clean package"
+
+            // To run Maven on a Windows agent, use
+            // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+         }
+
+         post {
+            success {
+               junit '**/target/surefire-reports/TEST-*.xml'
+               archiveArtifacts 'target/*.jar'
+            }
+         }
       }
-  }
+   }
 }
